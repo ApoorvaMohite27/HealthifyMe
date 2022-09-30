@@ -1,0 +1,59 @@
+﻿@using HealthifyMeFinalProject.Models
+@using HealthifyMeFinalProject.Models.Enums
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<HealthifyMeFinalProject.Models.Dietitian>
+
+@*----- to find if user is logged in *@
+@inject SignInManager<ApplicationUser> _signInManager
+
+@*----- gets the user object to see properties, roles *@
+@inject UserManager<ApplicationUser> _userManager
+@{
+    bool isLoggedIn = _signInManager.IsSignedIn(this.User);
+
+    bool isUserAdmin = false;
+    bool isUserDietitian = false;
+    ApplicationUser user = await _userManager.GetUserAsync(this.User);         // gets the Logged In User
+    if (user != null)
+    {
+        isUserAdmin = await _userManager.IsInRoleAsync(user, MyIdentityRoleNames.Admin.ToString());
+        isUserDietitian = await _userManager.IsInRoleAsync(user, MyIdentityRoleNames.Dietitian.ToString());
+    }
+}
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Dietitian List</h1>
+@if (isUserAdmin)
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
+<div class="card-columns">
+    @foreach (var item in Model) {
+
+        <div class="card">
+            <div class="card-img-top">
+                <img src="@item.DietitianPhoto" alt="@item.DietitianName" style="width:356px;height:300px;">
+            </div>
+            <div class="card-body">
+                <div class="card-header bg-warning" style="text-align:center;">
+                    <b>@item.DietitianName</b>             
+                </div>
+                    <br>
+                @if (isUserAdmin || isUserDietitian) {
+                    <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.DietitianId">Edit</a> 
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.DietitianId">Delete</a> 
+                }
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.DietitianId">Details</a> 
+            
+            </div>
+        </div>
+    
+}
+</div>

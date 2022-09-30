@@ -1,0 +1,66 @@
+﻿@using HealthifyMeFinalProject.Models
+@using HealthifyMeFinalProject.Models.Enums
+@using Microsoft.AspNetCore.Identity
+@model HealthifyMeFinalProject.Models.Dietitian
+@*----- to find if user is logged in *@
+@inject SignInManager<ApplicationUser> _signInManager
+
+@*----- gets the user object to see properties, roles *@
+@inject UserManager<ApplicationUser> _userManager
+@{
+    bool isLoggedIn = _signInManager.IsSignedIn(this.User);
+
+    bool isUserAdmin = false;
+    bool isUserDietitian = false;
+    ApplicationUser user = await _userManager.GetUserAsync(this.User);         // gets the Logged In User
+    if (user != null)
+    {
+        isUserAdmin = await _userManager.IsInRoleAsync(user, MyIdentityRoleNames.Admin.ToString());
+        isUserDietitian = await _userManager.IsInRoleAsync(user, MyIdentityRoleNames.Dietitian.ToString());
+    }
+}
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Dietitian</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DietitianPhoto)
+        </dt>
+        <dd class="col-sm-10">
+            @*@Html.DisplayFor(model => model.DietitianPhoto)*@
+            <img src="@Html.DisplayFor(model => model.DietitianPhoto)" style="width:200px;height:200px;" />
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DietitianName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DietitianName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Specialist)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Specialist)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        
+    </dl>
+</div>
+<div>
+    @if (isUserAdmin || isUserDietitian)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.DietitianId">Edit</a>
+    }
+    <a asp-action="Index">Back to List</a>
+</div>

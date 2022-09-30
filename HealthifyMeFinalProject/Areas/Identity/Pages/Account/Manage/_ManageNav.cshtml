@@ -1,0 +1,39 @@
+﻿@using HealthifyMeFinalProject.Models
+@using HealthifyMeFinalProject.Models.Enums
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+
+
+
+@*----- gets the user object to see properties, roles *@
+@inject UserManager<ApplicationUser> _userManager
+@{
+    bool isLoggedIn = SignInManager.IsSignedIn(this.User);
+
+    bool isUserMember = false;
+    ApplicationUser user = await _userManager.GetUserAsync(this.User);         // gets the Logged In User
+    if (user != null)
+    {
+        isUserMember = await _userManager.IsInRoleAsync(user, MyIdentityRoleNames.Member.ToString());
+    }
+}
+
+
+
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
+    @if (hasExternalLogins)
+    {
+        <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
+    }
+    <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
+    @if (isUserMember)
+    {
+        <li class="nav-item"><a class="nav-link" asp-area="HealthifyMeMgmt" asp-controller="CustomerDetails" asp-action="DisplayDetails">Details</a></li>
+    }
+</ul>

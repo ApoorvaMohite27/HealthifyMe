@@ -1,0 +1,49 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<body style="background-image: url('https://cdn.woorise.com/template/wp-content/uploads/sites/62/2021/02/online-registration-background.png');
+             background-repeat: no-repeat;
+             background-attachment: fixed;
+             background-size: 100% 100%;
+             align-content:center;
+             font-weight:bold">
+
+
+
+<div class="container w-50" style="background-color:white;margin-top:30px;">
+
+<h1 style="text-align:center">@ViewData["Title"]</h1><br />
+<div class="row" style="margin-left:80px;">
+    <div class="col-md-10">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h4 style="text-align:center">Create a new account.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-left:130px;">Register</button>
+        </form>
+    </div>
+</div><br />
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+</body>

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<HealthifyMeFinalProject.Models.CustomerDetail>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1 style="text-align:center">Customer Details</h1>
+<br />
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DOB)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Height)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentWeight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TargetWeight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MedicalCondition)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DOB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age) years
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Height) Ft/In
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentWeight) Kg
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TargetWeight) Kg
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MedicalCondition)
+            </td>
+            <td>
+                <a class="btn btn-primary" asp-area="HealthifyMeMgmt" asp-controller="AssignTasks" asp-action="Create" asp-route-id="@item.CustomerId">Assign</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<br />
+<br />
+<br />
+<br />

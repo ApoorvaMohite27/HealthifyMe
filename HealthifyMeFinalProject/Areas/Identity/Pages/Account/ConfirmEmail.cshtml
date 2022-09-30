@@ -1,0 +1,20 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Confirm email";
+}
+
+<body style="background-color:lightgreen;">
+    <br />
+    <br />
+    <h1 style="text-align:center">@ViewData["Title"]</h1>
+
+    <br />
+    <img style="display: block;margin-left: auto;margin-right: auto;" src="https://cdn.dribbble.com/users/2185205/screenshots/7886140/02-lottie-tick-01-instant-2.gif" />
+    <br />
+
+    @*Redirecting to CustomerDetails create page...*@
+    <a type="button" class="btn btn-primary" id="login" asp-area="Identity" asp-page="/Account/Login" style="width:100px;display: block;margin-left: auto;margin-right: auto;">
+        Next
+    </a>
+</body>

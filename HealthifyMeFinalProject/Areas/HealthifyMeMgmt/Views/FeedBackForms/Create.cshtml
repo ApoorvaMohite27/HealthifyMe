@@ -1,0 +1,55 @@
+﻿@model HealthifyMeFinalProject.Models.FeedBackForm
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>FeedBackForm</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CustomerName" class="control-label"></label>
+                <input asp-for="CustomerName" class="form-control" readonly="readonly"/>
+                <span asp-validation-for="CustomerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rating" class="control-label"></label><br />
+                <div class="custom-control-inline">
+                    @Html.RadioButtonFor(model => model.Rating, "Worst")                 
+                    <b>Worst</b>
+                </div>
+                <div class="custom-control-inline">
+                    @Html.RadioButtonFor(model => model.Rating, "Average")
+                    <b>Average</b> 
+                </div>
+                <div class="custom-control-inline">
+                    @Html.RadioButtonFor(model => model.Rating, "Good")
+                    <b>Good</b> 
+                </div>
+                <div class="custom-control-inline">
+                    @Html.RadioButtonFor(model => model.Rating, "Very Good")
+                    <b>Very Good</b> 
+                </div>
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comments" class="control-label"></label>
+                <input asp-for="Comments" class="form-control" />
+                <span asp-validation-for="Comments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
